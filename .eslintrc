@@ -1,0 +1,7 @@
+{
+  "extends": [
+    "@eslint-kit/patch",
+    "@eslint-kit/base"
+  ],
+  "parser": "babel-eslint"
+}
