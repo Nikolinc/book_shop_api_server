@@ -3,13 +3,13 @@
 const response = require('../response');
 const database = require('../settings/database');
 
-exports.Login = (req, res) => {
+exports.login = (req, res) => {
         
     let Email = req.body.Email;
     let password = req.body.password;
     console.log(req.body);
     console.log(password);
-     if (username && password) {
+     if (Email && password) {
          
           database.query('SELECT * FROM `user` WHERE Email = ? AND password = ?', [Email, password], function(error, results, fields) {
              
@@ -18,9 +18,8 @@ exports.Login = (req, res) => {
              if (results.length > 0) {
                 
                 //req.session.loggedin = true;
-               // req.session.username = username;
-                 
-               response.send(error, results);
+               // req.session.username = username; 
+               response.status(results,res)
              } else {
                response.send('Incorrect Username and/or Password!');
              }			
