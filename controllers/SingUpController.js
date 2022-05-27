@@ -9,10 +9,14 @@ exports.SingUp = (req, res) => {
 
 
     let user={
-        "username":req.body.username,
-        "fullname":req.body.fullname,
-        "email":req.body.email,
-        "password":req.body.password
+        "username": req.body.username,
+        "firstname": req.body.firstname,
+        "lastname": req.body.lastname,
+        "Email": req.body.Email,
+        "DateofBirth":req.body.DateofBirth,
+        "avatar": req.body.avatar,
+        "role": 'polsovatel',
+        "Password": req.body.Password,
     }
          
     database.query('INSERT INTO `user` SET ?',user, function(error, results, fields) {
