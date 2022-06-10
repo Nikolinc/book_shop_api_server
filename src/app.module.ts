@@ -4,6 +4,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { triggerAsyncId } from 'async_hooks';
 import { User } from './users/users.modul';
 import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
+import { Role } from './roles/roles.modul';
+import { UserRoles } from './roles/user-roles.model';
 
 @Module({
   imports: [
@@ -17,10 +20,11 @@ import { UsersModule } from './users/users.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User],
+      models: [User, Role, UserRoles],
       autoLoadModels: true,
     }),
     UsersModule,
+    RolesModule,
   ],
 })
 export class AppModule {}
