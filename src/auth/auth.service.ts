@@ -1,8 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UsersService } from 'src/users/users.service';
-import * as bcryptjs from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
+import { User } from 'src/users/users.modul';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +17,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(userDto: CreateUserDto) {}
+  async login(userDto: CreateUserDto) {
+    const user = await this.validateUser(userDto);
+    return this.generateToken(user);
+  }
 
   async registration(userDto: CreateUserDto) {
     const candidate = await this.userService.getUserByEmail(userDto.email);
@@ -21,7 +30,7 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const hashPassword = await bcryptjs.hash(userDto.password, 5);
+    const hashPassword = await bcrypt.hash(userDto.password, 5);
     const user = await this.userService.CreateUser({
       ...userDto,
       password: hashPassword,
@@ -29,16 +38,24 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async generateToken(user) {
-    const payload = {
-      email: user.email,
-      id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      roles: user.roles,
-    };
+  private async generateToken(user: User) {
+    const payload = { email: user.email, id: user.id, roles: user.roles };
     return {
       token: this.jwtService.sign(payload),
     };
+  }
+
+  private async validateUser(userDto: CreateUserDto) {
+    const user = await this.userService.getUserByEmail(userDto.email);
+    const passwordEquals = await bcrypt.compare(
+      userDto.password,
+      user.password,
+    );
+    if (user && passwordEquals) {
+      return user;
+    }
+    throw new UnauthorizedException({
+      message: 'Incorrect email or password',
+    });
   }
 }
