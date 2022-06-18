@@ -28,6 +28,7 @@ export class UsersService {
       where: { email },
       include: { all: true },
     });
+
     return user;
   }
 }
