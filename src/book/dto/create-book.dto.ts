@@ -1,62 +1,44 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  BelongsToMany,
-  Column,
-  DataType,
-  Model,
-  Table,
-} from 'sequelize-typescript';
+import { IsEmail, isEmail, IsString, Length } from 'class-validator';
 
-@Table({ tableName: 'Book' })
-export class Book extends Model<Book> {
-  @ApiProperty({ example: '1', description: 'Unique identificator' })
-  @Column({
-    type: DataType.INTEGER,
-    unique: true,
-    autoIncrement: true,
-    primaryKey: true,
-  })
-  id: number;
-
+export class CreateBookDto {
   @ApiProperty({
     example: 'The Outsider',
     description: 'name book',
   })
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @IsString({ message: 'should be a string' })
   name: string;
 
+  @ApiProperty({ example: 'Stephen King', description: 'author book' })
+  @IsString({ message: 'should be a string' })
+  author: string;
+
   @ApiProperty({
-    example: 2.10,
+    example: 2.1,
     description: 'price per book',
   })
-  @Column({ type: DataType.NUMBER})
   price: number;
 
   @ApiProperty({ example: 'dollar', description: 'Price currency per book' })
-  @Column({ type: DataType.STRING })
-  currency:string
-
-  @ApiProperty({ example: 'Stephen King', description: 'author book' })
-  @Column({ type: DataType.STRING })
-  author: string;
+  currency: string;
 
   @ApiProperty({ example: 'Scribner', description: 'Publisher book' })
-  @Column({ type: DataType.STRING })
+  @IsString({ message: 'should be a string' })
   publisher: string;
 
   @ApiProperty({
     example: 'May 22, 2018',
     description: 'book publication date',
   })
-  @Column({ type: DataType.DATE })
+  @IsString({ message: 'must be date' })
   PublicationDate: Date;
 
   @ApiProperty({ example: 'English', description: 'book language' })
-  @Column({ type: DataType.STRING })
+  @IsString({ message: 'should be a string' })
   Language: string;
 
   @ApiProperty({ example: '576 pages', description: 'Book print length' })
-  @Column({ type: DataType.STRING })
+  @IsString({ message: 'should be a string' })
   PrintLength: string;
 
   @ApiProperty({
@@ -64,7 +46,7 @@ export class Book extends Model<Book> {
       'https://images-na.ssl-images-amazon.com/images/I/61BwXgzFbjL._SX425_BO1,204,203,200_.jpg',
     description: 'book cover',
   })
-  @Column({ type: DataType.STRING })
+  @IsString({ message: 'should be a string' })
   cover: string;
 
   @ApiProperty({
@@ -72,6 +54,6 @@ export class Book extends Model<Book> {
       'An unspeakable crime. A confounding investigation. At a time when the King brand has never been stronger, he has delivered one of his most unsettling and compulsively listenable stories ...',
     description: 'description book',
   })
-  @Column({ type: DataType.STRING })
+  @IsString({ message: 'should be a string' })
   description: string;
 }
