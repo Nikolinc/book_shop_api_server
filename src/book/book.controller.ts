@@ -17,7 +17,6 @@ export class BookController {
   }
 
   @ApiOperation({ summary: 'get array book' })
-  @Roles('ADMIN')
   @Get()
   getAllBook() {
     return this.bookServer.getAllBook();

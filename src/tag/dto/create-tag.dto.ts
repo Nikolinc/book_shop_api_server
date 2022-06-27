@@ -7,5 +7,5 @@ export class CreateTagDto{
     description: 'tag book',
   })
   @IsString({ message: 'should be a string' })
-  name:string;
+  value:string;
 }

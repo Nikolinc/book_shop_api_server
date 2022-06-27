@@ -6,6 +6,8 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
+import { BookTag } from 'src/tag/book-tag.modul';
+import { Tag } from 'src/tag/tag.modul';
 
 @Table({ tableName: 'Book' })
 export class Book extends Model<Book> {
@@ -26,15 +28,15 @@ export class Book extends Model<Book> {
   name: string;
 
   @ApiProperty({
-    example: 2.10,
+    example: 2.1,
     description: 'price per book',
   })
-  @Column({ type: DataType.NUMBER})
+  @Column({ type: DataType.NUMBER })
   price: number;
 
   @ApiProperty({ example: 'dollar', description: 'Price currency per book' })
   @Column({ type: DataType.STRING })
-  currency:string
+  currency: string;
 
   @ApiProperty({ example: 'Stephen King', description: 'author book' })
   @Column({ type: DataType.STRING })
@@ -74,4 +76,7 @@ export class Book extends Model<Book> {
   })
   @Column({ type: DataType.STRING })
   description: string;
+
+  @BelongsToMany(() => Tag, () => BookTag)
+  tag: Tag[];
 }
