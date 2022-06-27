@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles-auth.decoration';
 import { BookService } from './book.service';
+import { addTagDto } from './dto/add-tag.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 
 @ApiTags('Books')
@@ -20,5 +21,12 @@ export class BookController {
   @Get()
   getAllBook() {
     return this.bookServer.getAllBook();
+  }
+
+  @ApiOperation({ summary: 'add tag' })
+  @Roles('ADMIN')
+  @Post('/tag')
+  addTag(@Body() dto: addTagDto) {
+    return this.bookServer.addTag(dto);
   }
 }
