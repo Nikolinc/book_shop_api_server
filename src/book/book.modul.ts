@@ -24,14 +24,14 @@ export class Book extends Model<Book> {
     example: 'The Outsider',
     description: 'name book',
   })
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING })
   name: string;
 
   @ApiProperty({
     example: 2.1,
     description: 'price per book',
   })
-  @Column({ type: DataType.NUMBER })
+  @Column({ type: DataType.FLOAT })
   price: number;
 
   @ApiProperty({ example: 'dollar', description: 'Price currency per book' })
@@ -75,7 +75,7 @@ export class Book extends Model<Book> {
     description: 'description book',
   })
   @Column({ type: DataType.STRING })
-  description: string;
+  description: string;AA
 
   @BelongsToMany(() => Genre, () => BookGener)
   Genre: Genre[];
