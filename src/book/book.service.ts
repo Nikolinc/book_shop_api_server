@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { TagService } from 'src/tag/tag.service';
+import { GenreService } from 'src/genre/genre.service';
 import { Book } from './book.modul';
 import { addTagDto } from './dto/add-tag.dto';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -9,7 +9,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 export class BookService {
   constructor(
     @InjectModel(Book) private bookRepository: typeof Book,
-    private tagService: TagService,
+    private genreService: GenreService,
   ) {}
 
   async CreateBook(dto: CreateBookDto) {
@@ -29,12 +29,12 @@ export class BookService {
 
   async addTag(dto: addTagDto) {
     const book = await this.bookRepository.findByPk(dto.bookId);
-    const tag = await this.tagService.getRoleByValue(dto.value);
+    const genre = await this.genreService.getRoleByValue(dto.value);
 
-    if (tag && book) {
-      await book.$add('tag', tag.id);
+    if (genre && book) {
+      await book.$add('genre', genre.id);
       return dto;
     }
-    throw new HttpException('Tag or book not found', HttpStatus.NOT_FOUND);
+    throw new HttpException('Genre or book not found', HttpStatus.NOT_FOUND);
   }
 }

@@ -6,8 +6,8 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { BookTag } from 'src/tag/book-tag.modul';
-import { Tag } from 'src/tag/tag.modul';
+import { BookGener } from 'src/genre/book-genre.modul';
+import { Genre } from 'src/genre/genre.modul';
 
 @Table({ tableName: 'Book' })
 export class Book extends Model<Book> {
@@ -77,6 +77,6 @@ export class Book extends Model<Book> {
   @Column({ type: DataType.STRING })
   description: string;
 
-  @BelongsToMany(() => Tag, () => BookTag)
-  tag: Tag[];
+  @BelongsToMany(() => Genre, () => BookGener)
+  Genre: Genre[];
 }

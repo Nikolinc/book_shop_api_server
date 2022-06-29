@@ -7,11 +7,11 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Book } from 'src/book/book.modul';
-import { Tag } from './tag.modul';
+import { Genre } from './genre.modul';
 
 
 @Table({ tableName: 'BookTag', createdAt: false, updatedAt: false })
-export class BookTag extends Model<BookTag> {
+export class BookGener extends Model<BookGener> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -20,9 +20,9 @@ export class BookTag extends Model<BookTag> {
   })
   id: number;
 
-  @ForeignKey(() => Tag)
+  @ForeignKey(() => Genre)
   @Column({ type: DataType.INTEGER })
-  idTag: number;
+  idGenre: number;
 
   @ForeignKey(() => Book)
   @Column({ type: DataType.INTEGER })

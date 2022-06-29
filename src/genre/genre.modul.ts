@@ -7,10 +7,10 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Book } from 'src/book/book.modul';
-import { BookTag } from './book-tag.modul';
+import { BookGener } from './book-genre.modul';
 
-@Table({ tableName: 'tag' })
-export class Tag extends Model<Tag> {
+@Table({ tableName: 'genre' })
+export class Genre extends Model<Genre> {
   @ApiProperty({ example: '1', description: 'Unique identificator' })
   @Column({
     type: DataType.INTEGER,
@@ -22,11 +22,11 @@ export class Tag extends Model<Tag> {
 
   @ApiProperty({
     example: 'Horror',
-    description: 'tag book',
+    description: 'gener book',
   })
   @Column({ type: DataType.STRING })
   value: string;
 
-  @BelongsToMany(() => Book, () => BookTag)
+  @BelongsToMany(() => Book, () => BookGener)
   Book: Book[];
 }

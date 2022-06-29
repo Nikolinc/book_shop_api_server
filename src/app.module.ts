@@ -9,7 +9,10 @@ import { Role } from './roles/roles.modul';
 import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
 import { BookModule } from './book/book.module';
-import { TagModule } from './tag/tag.module';
+import { Genre } from './genre/genre.modul';
+import { GenreModule } from './genre/genre.module';
+import { BookGener } from './genre/book-genre.modul';
+import { Book } from './book/book.modul';
 
 @Module({
   imports: [
@@ -23,14 +26,14 @@ import { TagModule } from './tag/tag.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [User, Role, UserRoles, Book ,Genre, BookGener],
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
     BookModule,
-    TagModule,
+    GenreModule,
   ],
 })
 export class AppModule {}
